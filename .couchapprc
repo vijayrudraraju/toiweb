@@ -1,0 +1,10 @@
+{
+    "env" : {
+        "public" : {
+            "db" : ""
+        },
+        "default" : {
+            "db" : "http://vijay:vijay@localhost:5984/toiweb"
+        }
+    }
+}

@@ -1,0 +1,26 @@
+html {
+	position:static;
+	background:rgb(0,0,0);
+}
+body {
+	position:static;
+	background:rgb(0,0,0);
+}
+canvas {
+	position:static;
+}
+p {
+    color:white;
+	font-size:16px;
+	font-family:sans-serif;
+    cursor:default;
+}
+h2 {
+    color:white;
+}
+div {
+    cursor:default;
+}
+span {
+	padding:2px;
+}
