@@ -9,6 +9,7 @@ couchapp_load([
   "/_utils/script/sha1.js",
   "/_utils/script/json2.js",
   "vendor/couchapp/jquery-1.7.1.js",
+  "vendor/couchapp/jquery.mobile-1.0.js",
   "/_utils/script/jquery.couch.js",
   "vendor/couchapp/jquery.couch.app.js",
   "vendor/couchapp/jquery.couch.app.util.js",

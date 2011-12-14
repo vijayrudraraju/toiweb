@@ -142,13 +142,113 @@ Object.prototype.nodeCount = function() {
 };
 */
 
-function indexWord(word,index) {
+// concatenated triplets
+// key
+// strength
+// down
+function indexWord(word,newTime,oldTime,index) {
+    if (word != '') {
+        var foundIndex = index.indexOf(word[0]);
+        console.log('index, foundIndex: '+foundIndex);
+        if (foundIndex === -1) {
+            index.push(word[0]);
+            index.push(0);
+            index.push(['',0,[]]);
+            foundIndex = index.indexOf(word[0]);
+        } else {
+            index[foundIndex+1]++;
+        }
+
+        if (word[1] !== undefined) {
+            indexWord(word.slice(1),newTime,oldTime,index[foundIndex+2]);
+        } else {
+            var terminalIndex = index[foundIndex+2].indexOf('');
+            index[foundIndex+2][terminalIndex+1]++;
+        }
+    }
+}
+
+function retrieveQueryTree(word,index,result,buffer) {
+    if (word != '') {
+        var foundIndex = index.indexOf(word[0]);
+        // if the letter is not found return nothing
+        if (foundIndex === -1) {
+            return '';     
+        }
+
+        buffer += word[0];
+        if (word[1] !== undefined) {
+            result = retrieveQueryTree(word.slice(1),index[foundIndex+2],result,buffer);
+        } else {
+            result = subTreeToText(retrieveSubTree(index[foundIndex+2],[]),'',buffer);
+        }
+    } 
+
+    return result;
+}
+function retrieveSubTree(index,result) {
+    for (var i=0;i<index.length;i+=3) {
+        result.push(index[i]); 
+        result.push(retrieveSubTree(index[i+2],[])); 
+    }
+    return result;
+}
+function subTreeToText(subtree,result,buffer) {
+    for (var i=0;i<subtree.length;i+=2) {
+        if (subtree[i] !== '') {
+            buffer += subtree[i];
+            result = subTreeToText(subtree[i+1],result,buffer);
+            buffer = buffer.substring(0,buffer.length-1);
+        }
+    }
+    result += '<br/>'+buffer; 
+    return result;
+}
+
+/*
+function indexWord(word,newTime,oldTime,index) {
     if (word != '') {
         if (index[word[0]] === undefined) {
             index[word[0]] = {};
+            //index[word[0]]['_timeStamp'] = newTime;
+            //index[word[0]]['_hitCount'] = 1;
+        } else if (oldTime == index[word[0]]['_timeStamp']) {
+            //index[word[0]]['_timeStamp'] = newTime;
+            //index[word[0]]['_hitCount']++;
         }
+
         if (word[1] !== undefined) {
-            indexWord(word.slice(1),index[word[0]]);
+            indexWord(word.slice(1),newTime,oldTime,index[word[0]]);
+        }
+    }
+}
+*/
+
+function indexPhrase(phrase,time,index) {
+    if (phrase != '') {
+        if (index[phrase[0]] === undefined) {
+            index[phrase[0]] = {};
+            index[phrase[0]]['_timestamp'] = [time];
+        } else {
+            index[phrase[0]]['_timestamp'].push(time);
+        }
+
+        if (phrase[1] !== undefined) {
+            indexPhrase(phrase.slice(1),time,index[phrase[0]]);
+        }
+    }
+}
+function indexParagraph(paragraph,time,index) {
+    if (paragraph != '') {
+        if (index[paragraph[0]] === undefined) {
+            index[paragraph[0]] = {};
+            index[paragraph[0]]['_timestamp'] = [time];
+        } else {
+            index[paragraph[0]]['_timestamp'].push(time);
+        }
+
+        if (paragraph[1] !== undefined) {
+            indexParagraph(paragraph.slice(1),time,index[paragraph[0]]);
         }
     }
 }
