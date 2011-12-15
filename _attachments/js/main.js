@@ -59,14 +59,15 @@ $(document).ready(function() {
 
         $('#textarea1').evently({
             _init: function() {
-                $(this).data('oldTime','');
                 $(this).data('wordIndex',['',0,[]]);
-                $(this).data('phraseIndex',{});
+                $(this).data('phraseIndex',['',0,[],[]]);
+
+                $(this).data('oldTime','');
                 $(this).data('paragraphIndex',{});
                 $(this).data('timeIndex',{});
                 $(this).data('assocIndex',{});
 
-                $(this).val('apple apartment application apart');
+                $(this).html('apple apartment application apart\nhello');
                 $(this).trigger('keyup');
             },
             keyup: function(e) {
@@ -76,14 +77,23 @@ $(document).ready(function() {
                 // start word index
                 var lines = $(this).val().split('\n');
                 var words = [];
+                var allWords = [];
+                console.log('lines');
+                console.log(lines);
                 for (var i=0;i<lines.length;i++) {
                     //indexParagraph(lines.slice(i),time,$(this).data('paragraphIndex'));
-                    words = words.concat(lines[i].split(/ +/)); 
+                    words = lines[i].split(/ +/);
+                    console.log('words');
+                    console.log(words);
+                    indexPhrase(words,$(this).data('phraseIndex'));
+                    allWords = allWords.concat(lines[i].split(/ +/)); 
                 }
-                for (var i=0;i<words.length;i++) {
+                console.log('allWords');
+                console.log(allWords);
+                for (var i=0;i<allWords.length;i++) {
                     //for (var j=0;j<words[i].length;j++) {
-                    console.log('indexing...'+words[i]);
-                    indexWord(words[i],newTime,oldTime,$(this).data('wordIndex'));
+                    //console.log('indexing...'+words[i]);
+                    indexWord(allWords[i],newTime,oldTime,$(this).data('wordIndex'));
                     //}
                     //indexPhrase(words.slice(i),time,$(this).data('phraseIndex'));
                 }
@@ -100,9 +110,11 @@ $(document).ready(function() {
             },
             keyup: function(e) {
                 var text = $(this).val();
-                var retrievalResult = retrieveQueryTree(text,$('#textarea1').data('wordIndex'),'','');
+                var retrievalResult = retrieveWordQueryTree(text,$('#textarea1').data('wordIndex'),'','');
                 //console.log('retrievalResult: '+retrievalResult);
                 $('#feedback1').html(retrievalResult);
+                retrievalResult = retrievePhraseQueryTree(text,$('#textarea1').data('phraseIndex'),'','');
+                $('#feedback2').html(retrievalResult);
             }
         });
 });

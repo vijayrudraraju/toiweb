@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!--<meta name="viewport" content="user-scalable=no,width=640"/>-->
-        <!--<link rel="stylesheet" href="css/reset.css" type="text/css">
-        <link rel="stylesheet" href="css/main.css" type="text/css">-->
-        <!--<meta name="apple-mobile-web-app-capable" content="yes"/>-->
         <title>toiweb</title>
 
         <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -36,7 +32,7 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#input" class="ui-btn-active ui-state-persist">input</a></li>
-                    <li><a href="#query">query</a></li>
+                    <li><a href="#query" class="ui-state-persist">query</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
@@ -51,12 +47,19 @@
                 <label for="textarea2">textarea2</label>
                 <textarea name="textarea2" id="textarea2"></textarea>
             </div><!-- /fieldcontain -->
-            <p id="feedback1">feedback1</p>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <p id="feedback1">feedback1</p>
+                </div><!-- /block-a -->
+                <div class="ui-block-b">
+                    <p id="feedback2">feedback2</p>
+                </div><!-- /block-b -->
+            </div><!-- /grid-a -->
         </div><!-- /content -->
         <div data-role="footer" data-id="foot" data-position="fixed">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#input">input</a></li>
+                    <li><a href="#input" class="ui-state-persist">input</a></li>
                     <li><a href="#query" class="ui-btn-active ui-state-persist">query</a></li>
                 </ul>
             </div><!-- /navbar -->

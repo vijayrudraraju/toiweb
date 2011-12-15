@@ -142,6 +142,41 @@ Object.prototype.nodeCount = function() {
 };
 */
 
+function indexPhrase(phrase,index) {
+    console.log('indexPhrase');
+    console.log(phrase);
+    for (var i=0;i<phrase.length;i++) {
+        //console.log(phrase.slice(i));
+        indexPhraseHelper(phrase.slice(i),index,phrase.slice(0,i)); 
+    }
+}
+function indexPhraseHelper(phrase,index,buffer) {
+    if (phrase != '') {
+        var foundIndex = index.indexOf(phrase[0]);
+        if (foundIndex === -1) {
+            index.push(phrase[0]);
+            index.push(0);
+            index.push(['',0,[],[]]);
+            index.push(buffer.slice());
+            foundIndex = index.indexOf(phrase[0]);
+        } else {
+            index[foundIndex+1]++;
+        }
+
+        if (phrase[1] !== undefined) {
+            //console.log(buffer);
+            buffer.push(phrase[0]);
+            indexPhraseHelper(phrase.slice(1),index[foundIndex+2],buffer.slice());
+        } else {
+            var terminalIndex = index[foundIndex+2].indexOf('');
+            index[foundIndex+2][terminalIndex+1]++;
+        }
+    }
+}
+function retrievePhraseQueryTree(word,index,result,buffer) {
+    return 'ping';
+}
+
 // concatenated triplets
 // key
 // strength
@@ -149,7 +184,6 @@ Object.prototype.nodeCount = function() {
 function indexWord(word,newTime,oldTime,index) {
     if (word != '') {
         var foundIndex = index.indexOf(word[0]);
-        console.log('index, foundIndex: '+foundIndex);
         if (foundIndex === -1) {
             index.push(word[0]);
             index.push(0);
@@ -168,7 +202,7 @@ function indexWord(word,newTime,oldTime,index) {
     }
 }
 
-function retrieveQueryTree(word,index,result,buffer) {
+function retrieveWordQueryTree(word,index,result,buffer) {
     if (word != '') {
         var foundIndex = index.indexOf(word[0]);
         // if the letter is not found return nothing
@@ -178,7 +212,7 @@ function retrieveQueryTree(word,index,result,buffer) {
 
         buffer += word[0];
         if (word[1] !== undefined) {
-            result = retrieveQueryTree(word.slice(1),index[foundIndex+2],result,buffer);
+            result = retrieveWordQueryTree(word.slice(1),index[foundIndex+2],result,buffer);
         } else {
             result = subTreeToText(retrieveSubTree(index[foundIndex+2],[]),'',buffer);
         }
@@ -224,6 +258,7 @@ function indexWord(word,newTime,oldTime,index) {
 }
 */
 
+/*
 function indexPhrase(phrase,time,index) {
     if (phrase != '') {
         if (index[phrase[0]] === undefined) {
@@ -238,6 +273,7 @@ function indexPhrase(phrase,time,index) {
         }
     }
 }
+*/
 function indexParagraph(paragraph,time,index) {
     if (paragraph != '') {
         if (index[paragraph[0]] === undefined) {
