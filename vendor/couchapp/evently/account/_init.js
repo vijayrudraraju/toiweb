@@ -11,6 +11,8 @@ function() {
       } else {
         elem.trigger("loggedOut");
       };
+      //$('#input').trigger('create');
+      $('#input').page('destroy').page();
     }
   });
 }

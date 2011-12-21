@@ -1,0 +1,9 @@
+{
+    "cloudant": {
+        "nobody": ["_reader", "_writer", "_admin"]
+    },
+    "readers": {
+        "names": ["demo"],
+        "roles": []
+    }
+}

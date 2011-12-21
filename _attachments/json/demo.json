@@ -1,0 +1,9 @@
+{
+    "_id": "org.couchdb.user:demo",
+    "_rev": "1-3a519236f1499198101c060acb161257",
+    "name": "demo",
+    "type": "user",
+    "roles": [],
+    "password_sha": "4ae5d8d0208938f78039c6cbbcf09b0545a5f81",
+    "salt": "d967d67255ea69bb99c200c53ff6cbd2"
+}

@@ -143,15 +143,15 @@ Object.prototype.nodeCount = function() {
 */
 
 function indexPhrase(phrase,index) {
-    console.log('indexPhrase');
-    console.log(phrase);
+    //console.log('indexPhrase');
+    //console.log(phrase);
     for (var i=0;i<phrase.length;i++) {
         //console.log(phrase.slice(i));
         indexPhraseHelper(phrase.slice(i),index,phrase.slice(0,i)); 
     }
 }
 function indexPhraseHelper(phrase,index,buffer) {
-    if (phrase != '') {
+    if (phrase !== '') {
         var foundIndex = index.indexOf(phrase[0]);
         if (foundIndex === -1) {
             index.push(phrase[0]);
@@ -173,8 +173,51 @@ function indexPhraseHelper(phrase,index,buffer) {
         }
     }
 }
-function retrievePhraseQueryTree(word,index,result,buffer) {
-    return 'ping';
+function retrievePhraseQueryTree(phrase,index,result,buffer) {
+    if (phrase[0] !== '') {
+        var foundIndex = index.indexOf(phrase[0]);
+        console.log(phrase);
+        console.log('phrase: '+phrase[0]);
+        console.log('foundIndex: '+foundIndex);
+        // if the letter is not found return nothing
+        if (foundIndex === -1) {
+            return '';     
+        }
+
+        buffer += phrase[0] + ' ';
+
+        if (phrase[1] !== undefined) {
+            result = retrievePhraseQueryTree(phrase.slice(1),index[foundIndex+2],result,buffer);
+        } else {
+            result = phraseSubTreeToText(retrievePhraseSubTree(index[foundIndex+2],[]),'',buffer);
+            //result = retrievePhraseSubTree(index[foundIndex+2],[]);
+        }
+    }
+    return result;
+}
+function retrievePhraseSubTree(index,result) {
+    for (var i=0;i<index.length;i+=4) {
+        result.push(index[i]); 
+        result.push(retrievePhraseSubTree(index[i+2],[])); 
+        result.push(index[i+3]); 
+    }
+    return result;
+}
+function phraseSubTreeToText(subTree,result,buffer) {
+    console.log('subTree.length: '+subTree.length);
+    for (var i=0;i<subTree.length;i+=3) {
+        if (subTree[i] !== '') {
+            buffer += subTree[i];
+            console.log('subTree[i]: '+subTree[i]);
+            if (subTree.length >= 6) {
+                buffer += ' ';
+            }
+            result = phraseSubTreeToText(subTree[i+1],result,buffer);
+            //buffer = buffer.substring(0,buffer.length);
+        }
+    }
+    result += '<br/>'+buffer; 
+    return result;
 }
 
 // concatenated triplets
@@ -182,7 +225,7 @@ function retrievePhraseQueryTree(word,index,result,buffer) {
 // strength
 // down
 function indexWord(word,newTime,oldTime,index) {
-    if (word != '') {
+    if (word !== '') {
         var foundIndex = index.indexOf(word[0]);
         if (foundIndex === -1) {
             index.push(word[0]);
@@ -201,9 +244,8 @@ function indexWord(word,newTime,oldTime,index) {
         }
     }
 }
-
 function retrieveWordQueryTree(word,index,result,buffer) {
-    if (word != '') {
+    if (word !== '') {
         var foundIndex = index.indexOf(word[0]);
         // if the letter is not found return nothing
         if (foundIndex === -1) {
@@ -214,24 +256,24 @@ function retrieveWordQueryTree(word,index,result,buffer) {
         if (word[1] !== undefined) {
             result = retrieveWordQueryTree(word.slice(1),index[foundIndex+2],result,buffer);
         } else {
-            result = subTreeToText(retrieveSubTree(index[foundIndex+2],[]),'',buffer);
+            result = wordSubTreeToText(retrieveWordSubTree(index[foundIndex+2],[]),'',buffer);
         }
     } 
 
     return result;
 }
-function retrieveSubTree(index,result) {
+function retrieveWordSubTree(index,result) {
     for (var i=0;i<index.length;i+=3) {
         result.push(index[i]); 
-        result.push(retrieveSubTree(index[i+2],[])); 
+        result.push(retrieveWordSubTree(index[i+2],[])); 
     }
     return result;
 }
-function subTreeToText(subtree,result,buffer) {
-    for (var i=0;i<subtree.length;i+=2) {
-        if (subtree[i] !== '') {
-            buffer += subtree[i];
-            result = subTreeToText(subtree[i+1],result,buffer);
+function wordSubTreeToText(subTree,result,buffer) {
+    for (var i=0;i<subTree.length;i+=2) {
+        if (subTree[i] !== '') {
+            buffer += subTree[i];
+            result = wordSubTreeToText(subTree[i+1],result,buffer);
             buffer = buffer.substring(0,buffer.length-1);
         }
     }

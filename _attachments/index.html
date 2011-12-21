@@ -19,9 +19,8 @@
 
 <body>
     <div data-role="page" id="input" data-title="toiweb">
-        <div data-role="header">
-            <h1>input</h1>
-        </div><!-- /header -->
+        <div id="account">
+        </div>
         <div data-role="content">
             <div data-role="fieldcontain">
                 <label for="textarea1">textarea1</label>
@@ -41,6 +40,7 @@
     <div data-role="page" id="query" data-title="toiweb">
         <div data-role="header">
             <h1>query</h1>
+            <a href="#login" data-role="button" data-rel="dialog" data-icon="gear" class="ui-btn-right">User</a>
         </div><!-- /header -->
         <div data-role="content">
             <div data-role="fieldcontain">
@@ -64,6 +64,20 @@
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <div data-role="page" id="login" data-title="toiweb">
+        <div data-role="header">
+            <h1>login</h1>
+        </div><!-- /header -->
+        <div data-role="content">
+            <div data-role="fieldcontain">
+                <label for="userid">user id</label>
+                <input type="text" name="userid" id="userid"></textarea>
+                <label for="userpass">user pass</label>
+                <input type="password" name="userpass" id="userpass"></textarea>
+            </div><!-- /fieldcontain -->
+        </div><!-- /content -->
     </div><!-- /page -->
 </body>
 </html>

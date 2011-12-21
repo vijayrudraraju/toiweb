@@ -1,5 +1,10 @@
 // vijay rudraraju
 
+$.couch.app(function(app) {
+    $("#account").evently("account", app);
+    //$('#account').trigger('create');
+});
+
 var gP;
 $(document).ready(function() {
         //$db = $.couch.db('toiweb');
@@ -16,6 +21,7 @@ $(document).ready(function() {
                 console.log(data);
             }
         });
+        /*
         $.couch.login({
             name: 'vijay',
             password: 'vijay',
@@ -27,6 +33,7 @@ $(document).ready(function() {
                 console.log(status);
             }
         });
+        */
         $.couch.db('toiweb').allDocs({
             success: function(data) {
                 console.log('allDocs');
@@ -36,6 +43,8 @@ $(document).ready(function() {
 
         $(document).evently({
             _init: function() {
+            },
+            pageinit: function() {
             },
             keypress: function(e) {
                 //e.preventDefault();
@@ -78,18 +87,18 @@ $(document).ready(function() {
                 var lines = $(this).val().split('\n');
                 var words = [];
                 var allWords = [];
-                console.log('lines');
-                console.log(lines);
+                //console.log('lines');
+                //console.log(lines);
                 for (var i=0;i<lines.length;i++) {
                     //indexParagraph(lines.slice(i),time,$(this).data('paragraphIndex'));
                     words = lines[i].split(/ +/);
-                    console.log('words');
-                    console.log(words);
+                    //console.log('words');
+                    //console.log(words);
                     indexPhrase(words,$(this).data('phraseIndex'));
                     allWords = allWords.concat(lines[i].split(/ +/)); 
                 }
-                console.log('allWords');
-                console.log(allWords);
+                //console.log('allWords');
+                //console.log(allWords);
                 for (var i=0;i<allWords.length;i++) {
                     //for (var j=0;j<words[i].length;j++) {
                     //console.log('indexing...'+words[i]);
@@ -110,10 +119,17 @@ $(document).ready(function() {
             },
             keyup: function(e) {
                 var text = $(this).val();
+                var lines = text.split('\n');
+                var allWords = [];
+                for (var i=0;i<lines.length;i++) {
+                    allWords = allWords.concat(lines[i].split(/ +/)); 
+                }
+
                 var retrievalResult = retrieveWordQueryTree(text,$('#textarea1').data('wordIndex'),'','');
                 //console.log('retrievalResult: '+retrievalResult);
                 $('#feedback1').html(retrievalResult);
-                retrievalResult = retrievePhraseQueryTree(text,$('#textarea1').data('phraseIndex'),'','');
+                retrievalResult = retrievePhraseQueryTree(allWords,$('#textarea1').data('phraseIndex'),'','');
+                console.log(retrievalResult);
                 $('#feedback2').html(retrievalResult);
             }
         });
