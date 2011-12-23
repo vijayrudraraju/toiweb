@@ -19,7 +19,7 @@
 
 <body>
     <div data-role="page" id="input" data-title="toiweb">
-        <div id="account">
+        <div id="account1">
         </div>
         <div data-role="content">
             <div data-role="fieldcontain">
@@ -38,10 +38,8 @@
     </div><!-- /page -->
 
     <div data-role="page" id="query" data-title="toiweb">
-        <div data-role="header">
-            <h1>query</h1>
-            <a href="#login" data-role="button" data-rel="dialog" data-icon="gear" class="ui-btn-right">User</a>
-        </div><!-- /header -->
+        <div id="account2">
+        </div>
         <div data-role="content">
             <div data-role="fieldcontain">
                 <label for="textarea2">textarea2</label>
@@ -66,16 +64,37 @@
         </div><!-- /footer -->
     </div><!-- /page -->
 
+
     <div data-role="page" id="login" data-title="toiweb">
         <div data-role="header">
             <h1>login</h1>
         </div><!-- /header -->
         <div data-role="content">
             <div data-role="fieldcontain">
-                <label for="userid">user id</label>
-                <input type="text" name="userid" id="userid"></textarea>
-                <label for="userpass">user pass</label>
-                <input type="password" name="userpass" id="userpass"></textarea>
+                <form>
+                    <label for="userid" class="ui-hidden-accessible">user id</label>
+                    <input type="text" name="userid" id="userid" placeholder="user id"/>
+                    <label for="userpass" class="ui-hidden-accessible">user pass</label>
+                    <input type="password" name="userpass" id="userpass" placeholder="user pass"/>
+                    <input type="submit" value="login" id="loginsubmit"/>
+                </form>
+            </div><!-- /fieldcontain -->
+        </div><!-- /content -->
+    </div><!-- /page -->
+
+    <div data-role="page" id="signup" data-title="toiweb">
+        <div data-role="header">
+            <h1>signup</h1>
+        </div><!-- /header -->
+        <div data-role="content">
+            <div data-role="fieldcontain">
+                <form>
+                    <label for="newuserid" class="ui-hidden-accessible">new user id</label>
+                    <input type="text" name="newuserid" id="newuserid" placeholder="new user id"/>
+                    <label for="userpass" class="ui-hidden-accessible">new user pass</label>
+                    <input type="password" name="newuserpass" id="newuserpass" placeholder="new user pass"/>
+                    <input type="submit" value="signup" id="signupsubmit"/>
+                </form>
             </div><!-- /fieldcontain -->
         </div><!-- /content -->
     </div><!-- /page -->

@@ -1,3 +1,3 @@
 function() {
-  $("input[name=name]", this).focus();
+    $("input[name=name]", this).focus();
 }

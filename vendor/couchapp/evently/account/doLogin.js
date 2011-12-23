@@ -4,6 +4,7 @@ function(e, name, pass) {
     name : name,
     password : pass,
     success : function(r) {
+      $('.ui-dialog').dialog('close');
       elem.trigger("_init")
     }
   });      

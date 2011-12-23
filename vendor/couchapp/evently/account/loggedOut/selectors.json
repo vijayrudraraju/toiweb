@@ -1,4 +1,4 @@
 {
-  "a[href=#signup]" : {"click" : ["signupForm"]},
-   "a[href=#login]" : {"click" : ["loginForm"]}
+  "a[href=#signup]" : {"" : [""]},
+   "a[href=#login]" : {"" : [""]}
 }
